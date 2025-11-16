@@ -24,7 +24,9 @@ This project implements **CRUD operations** (Create, Read, Update, Delete) for m
 * **Uvicorn** – ASGI server
 * **SQLAlchemy** – ORM
 * **SQLite** – Database
-* **Pydantic** – Data validation
+* **Pydantic** – Data validation\
+* **Python** – Language
+* **Git,Github** – Tools
 
 ---
 
@@ -87,9 +89,33 @@ FastAPI automatically provides UI docs:
 
 ---
 
+## Project Architecture
+
+ems-fastapi/
+│── main.py              # Main FastAPI application
+│── database.py          # DB connection & engine
+│── models.py            # SQLAlchemy models
+│── schemas.py           # Pydantic schemas
+│── crud.py              # CRUD logic functions
+│── employees.db         # SQLite database file
+│── requirements.txt     # Dependencies
+└── README.md            # Documentation
+
+---
+
 ## 📚 Database
 
 This project uses **SQLite** (`employees.db`) for simplicity.
+
+---
+
+## Future Enhancements
+
+Add JWT authentication
+
+Add employee search & filtering
+
+Add unit tests (pytest)
 
 ---
 
