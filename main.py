@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional, List
 from sqlalchemy import Column, Integer, String, create_engine
@@ -71,7 +71,6 @@ app = FastAPI(
 )
 
 
-
 def get_db():
     db = SessionLocal()
     try:
@@ -82,9 +81,7 @@ def get_db():
 
 # CREATE EMPLOYEE
 @app.post("/employees", response_model=EmployeeOut, tags=["Employees"])
-def create_employee(emp: EmployeeCreate):
-    db: Session = next(get_db())
-
+def create_employee(emp: EmployeeCreate, db: Session = Depends(get_db)):
     existing = db.query(EmployeeDB).filter(EmployeeDB.email == emp.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already exists")
@@ -103,15 +100,13 @@ def create_employee(emp: EmployeeCreate):
 
 # GET ALL EMPLOYEES
 @app.get("/employees", response_model=List[EmployeeOut], tags=["Employees"])
-def get_employees():
-    db: Session = next(get_db())
+def get_employees(db: Session = Depends(get_db)):
     return db.query(EmployeeDB).all()
 
 
 # GET EMPLOYEE BY ID
 @app.get("/employees/{emp_id}", response_model=EmployeeOut, tags=["Employees"])
-def get_employee(emp_id: int):
-    db: Session = next(get_db())
+def get_employee(emp_id: int, db: Session = Depends(get_db)):
     emp = db.query(EmployeeDB).filter(EmployeeDB.id == emp_id).first()
 
     if not emp:
@@ -122,8 +117,7 @@ def get_employee(emp_id: int):
 
 # UPDATE EMPLOYEE
 @app.put("/employees/{emp_id}", response_model=EmployeeOut, tags=["Employees"])
-def update_employee(emp_id: int, data: EmployeeUpdate):
-    db: Session = next(get_db())
+def update_employee(emp_id: int, data: EmployeeUpdate, db: Session = Depends(get_db)):
     emp = db.query(EmployeeDB).filter(EmployeeDB.id == emp_id).first()
 
     if not emp:
@@ -140,8 +134,7 @@ def update_employee(emp_id: int, data: EmployeeUpdate):
 
 # DELETE EMPLOYEE
 @app.delete("/employees/{emp_id}", tags=["Employees"])
-def delete_employee(emp_id: int):
-    db: Session = next(get_db())
+def delete_employee(emp_id: int, db: Session = Depends(get_db)):
     emp = db.query(EmployeeDB).filter(EmployeeDB.id == emp_id).first()
 
     if not emp:
@@ -150,4 +143,3 @@ def delete_employee(emp_id: int):
     db.delete(emp)
     db.commit()
     return {"message": "Employee deleted successfully"}
-
