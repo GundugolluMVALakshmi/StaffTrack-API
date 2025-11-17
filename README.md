@@ -33,8 +33,8 @@ This project implements full **CRUD operations** (Create, Read, Update, Delete) 
 
 ### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/GundugolluMVALakshmi/ems-fastapi.git
-cd ems-fastapi
+git clone https://github.com/GundugolluMVALakshmi/StaffTrack-API.git
+cd StaffTrack-API
 ```
 
 ### 2️⃣ Create virtual environment
@@ -81,7 +81,7 @@ Click below to view the interactive API:
 
 ## 🧱 Project Architecture
 ```
-ems-fastapi/
+StaffTrack-API/
 │── main.py              # Main FastAPI application
 │── database.py          # DB connection & engine
 │── models.py            # SQLAlchemy models
@@ -90,6 +90,7 @@ ems-fastapi/
 │── employees.db         # SQLite database file
 │── requirements.txt     # Dependencies
 └── README.md            # Documentation
+
 ```
 
 ---
