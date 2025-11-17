@@ -64,9 +64,27 @@ class EmployeeOut(BaseModel):
 # FASTAPI APP
 # -------------------
 
-app = FastAPI(title="Employee Management System (EMS)")
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
+from database import Base, engine, SessionLocal
+from models import Employee
+import crud
 
+# Create DB tables
+Base.metadata.create_all(bind=engine)
 
+# FastAPI App Metadata (StaffTrack Branding)
+app = FastAPI(
+    title="StaffTrack API",
+    description="A FastAPI-based Employee Management System for CRUD operations.",
+    version="1.0.0",
+    contact={
+        "name": "Gundugollu Mohana Venkata Achuta Lakshmi",
+        "url": "https://github.com/GundugolluMVALakshmi",
+    },
+)
+
+# Database session
 def get_db():
     db = SessionLocal()
     try:
